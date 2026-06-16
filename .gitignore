@@ -1,0 +1,21 @@
+# UiPath
+.local/
+.objects/
+.settings/
+*.nupkg
+testResults*.xml
+
+# Node (workflow tooling)
+node_modules/
+.env
+.env.*
+!.env.example
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
