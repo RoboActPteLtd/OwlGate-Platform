@@ -70,4 +70,4 @@ low-code / UiPath-native components** — see the demo video for where each is u
 
 ## License
 
-[MIT](./LICENSE)
+[Apache 2.0](./LICENSE)
