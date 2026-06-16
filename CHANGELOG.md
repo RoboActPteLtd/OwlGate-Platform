@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Repository layout for the UiPath Solution, Test Cloud test specs, API Workflows,
   and Orchestrator orchestration.
 - Architecture, demo-script, and runbook docs.
-- Minimal GitHub Actions CI — required-files check and JSON well-formedness validation.
+- Minimal GitHub Actions CI — required-files check and JSON well-formedness validation; gitleaks secret scan.
 
 ### Changed
 
