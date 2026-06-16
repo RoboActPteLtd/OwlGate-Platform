@@ -18,12 +18,27 @@ Runtime: serverless slots free on the workspace machine (2 Unattended +
 
 ## Provisioned resources
 
-- **Queue** `owlgate-changes` — live in the `Shared` folder (unique-reference
-  enforced, max-retries 1). Created via [`scripts/provision.sh`](../scripts/provision.sh).
-- **Coded agent** `owlgate-gate` — **published** to the tenant (process 2200361) via
-  `uip codedagent deploy` from [`owlgate-agents/uipath-agent`](../../owlgate-agents/uipath-agent).
-- Still to wire on the tenant: the queue trigger → `owlgate-gate` process binding,
-  the Test Cloud test cases, and the Action Center approval task.
+- **Coded agent** `owlgate-gate` (0.0.2) — published to the tenant feed and bound as
+  a **process in the `Shared` folder** (env `OWLGATE_ESCALATE=1`). Verified by a
+  successful Orchestrator job (verdict `no-go`, `needs_human`).
+- **API trigger** `owlgate-on-change` (POST) → the `owlgate-gate` process. A CI/PR
+  webhook posts the change to invoke the gate.
+- **Queue** `owlgate-changes` — live in `Shared` (unique-reference, max-retries 1)
+  as the change-record store.
+- **Action Center** — the agent raises an approval task on `needs_human` (SDK
+  `sdk.tasks.create`, gated by `OWLGATE_ESCALATE`).
+
+> **Coded agents can't be queue-trigger targets** (HTTP 400 "Process cannot be
+> configured for Queue triggers") — they're invoked via agent jobs / API. OwlGate
+> therefore uses an **API trigger**, which also fits the "CI webhook posts the diff"
+> model better than queue consumption.
+
+### Still requires the UiPath UI / admin
+
+- **Test Cloud / Test Manager** — no Test Manager project is provisioned on the
+  tenant ("no projects accessible"). Enabling the Test Manager service and authoring
+  the test cases is a portal/Studio step; the agents + sample app prove the testing
+  logic in the meantime.
 
 ## Common commands
 
