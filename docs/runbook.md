@@ -25,11 +25,12 @@ Runtime: serverless slots free on the workspace machine (2 Unattended +
   webhook posts the change to invoke the gate.
 - **Queue** `owlgate-changes` — live in `Shared` (unique-reference, max-retries 1)
   as the change-record store.
-- **Action Center HITL** — the agent calls `sdk.tasks.create` on `needs_human`
-  (gated by `OWLGATE_ESCALATE`), and the Shared process sets the flag. **But the
-  Actions service is not enabled on this tenant**, so no approval task is raised yet
-  — the call is best-effort and swallowed. Coded + process-configured; it goes live
-  once an admin enables Actions.
+- **Human-gate (HITL)** — on a no-go needing approval, the agent writes a **queue
+  item** to `owlgate-changes` as a human-reviewable approval record — **verified
+  live: a tenant job created one** (escalation reported `queued`). It also attempts
+  an **Action Center task**, which currently errors because the tenant's Actions
+  service isn't enabled — a graceful upgrade, not a blocker. Gated by the `escalate`
+  input.
 - **Test Manager** — project `OwlGate` (`OWLGATE`) with test set `OwlGate smoke`
   (`OWLGATE:5`) and 4 test cases, all created via `uip tm`. The cases are manual
   (the coded agent has no test-automation entry point to run them automated).
@@ -42,9 +43,10 @@ Runtime: serverless slots free on the workspace machine (2 Unattended +
 ### Still requires the UiPath UI / admin
 
 - **Actions / Action Center** — not enabled on this tenant (the UI redirects to
-  "Actions is not enabled… contact your administrator"). The coded HITL escalation
-  can't raise a visible approval task until a tenant admin enables the Actions
-  service. (Test Manager, by contrast, *is* reachable via `uip tm` — see above.)
+  "Actions is not enabled… contact your administrator"). This only affects the
+  *richer* Action Center task — the **queue-item approval record already provides
+  HITL today**; enabling Actions is an upgrade. (Test Manager *is* reachable via
+  `uip tm` — see above.)
 - **Automated test execution** — the Test Manager cases above are manual; running
   them on Test Cloud needs a UiPath test-automation entry point authored in Studio.
 
