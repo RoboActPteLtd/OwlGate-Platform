@@ -20,8 +20,10 @@ Runtime: serverless slots free on the workspace machine (2 Unattended +
 
 - **Queue** `owlgate-changes` — live in the `Shared` folder (unique-reference
   enforced, max-retries 1). Created via [`scripts/provision.sh`](../scripts/provision.sh).
-- Still to provision on the tenant: the coded-agent package, the `owlgate-gate`
-  process + queue trigger, the Test Cloud test cases, and the Action Center task.
+- **Coded agent** `owlgate-gate` — **published** to the tenant (process 2200361) via
+  `uip codedagent deploy` from [`owlgate-agents/uipath-agent`](../../owlgate-agents/uipath-agent).
+- Still to wire on the tenant: the queue trigger → `owlgate-gate` process binding,
+  the Test Cloud test cases, and the Action Center approval task.
 
 ## Common commands
 
