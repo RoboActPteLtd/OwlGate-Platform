@@ -19,6 +19,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   dashboard flow. The `owlgate-changes` queue is **provisioned on the UiPath Labs
   tenant** (Shared folder, unique-reference enforced).
 - Minimal GitHub Actions CI — required-files check and JSON well-formedness validation; gitleaks secret scan.
+- Test Manager content authored via `uip tm` — project `OwlGate` (`OWLGATE`) with
+  test set `OwlGate smoke` and 4 test cases.
+
+### Fixed
+
+- Corrected docs that overstated the Action Center HITL as live: the **Actions
+  service is not enabled on the tenant**, so the coded `sdk.tasks.create` escalation
+  cannot raise a visible task yet (it is implemented and process-configured).
 
 ### Changed
 
