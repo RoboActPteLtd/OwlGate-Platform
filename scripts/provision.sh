@@ -13,10 +13,13 @@ uip user >/dev/null
 uip or licenses info --output table || true
 
 echo "==> Creating queue 'owlgate-changes' in '$FOLDER'"
-uip or queues create \
-  --name "owlgate-changes" \
+# 'name' is a positional argument. Safe to skip if it already exists.
+uip or queues create owlgate-changes \
+  --folder-path "$FOLDER" \
   --description "One work item per change entering the OwlGate gate" \
-  --folder-path "$FOLDER"
+  --max-retries 1 \
+  --enforce-unique-reference \
+  || echo "   (queue may already exist — continuing)"
 
 cat <<'NEXT'
 

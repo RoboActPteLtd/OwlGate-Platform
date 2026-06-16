@@ -16,7 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Declarative orchestration manifest (`orchestration/owlgate.orchestration.json`),
   a `scripts/provision.sh` using the `uip` CLI, and an integration guide
   (`docs/integration.md`) wiring the queue → trigger → process → agents → gate →
-  dashboard flow.
+  dashboard flow. The `owlgate-changes` queue is **provisioned on the UiPath Labs
+  tenant** (Shared folder, unique-reference enforced).
 - Minimal GitHub Actions CI — required-files check and JSON well-formedness validation; gitleaks secret scan.
 
 ### Changed

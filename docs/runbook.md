@@ -16,6 +16,13 @@ Runtime: serverless slots free on the workspace machine (2 Unattended +
 2 TestAutomation). **Confirm AI-unit balance in the Automation Cloud portal**
 (Tenant → Licenses → AI units) before the demo.
 
+## Provisioned resources
+
+- **Queue** `owlgate-changes` — live in the `Shared` folder (unique-reference
+  enforced, max-retries 1). Created via [`scripts/provision.sh`](../scripts/provision.sh).
+- Still to provision on the tenant: the coded-agent package, the `owlgate-gate`
+  process + queue trigger, the Test Cloud test cases, and the Action Center task.
+
 ## Common commands
 
 ```bash
