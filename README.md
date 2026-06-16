@@ -1,5 +1,7 @@
 # owlgate-platform
 
+[![CI](https://github.com/RoboActPteLtd/OwlGate-Platform/actions/workflows/ci.yml/badge.svg)](https://github.com/RoboActPteLtd/OwlGate-Platform/actions/workflows/ci.yml)
+
 The UiPath orchestration layer for **OwlGate** — an agentic release-gate built on
 **UiPath Test Cloud** for UiPath AgentHack 2026, **Track 3**.
 

@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+# Minimal while the solution is being authored: ensure the repo's required files
+# exist and any JSON artifacts (API Workflows, configs) are well-formed. UiPath
+# solution pack / Test Cloud runs get added once artifacts land.
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Required files present
+        run: |
+          for f in README.md LICENSE CHANGELOG.md; do
+            test -f "$f" || { echo "missing $f"; exit 1; }
+          done
+          echo "required files OK"
+      - name: JSON artifacts are well-formed
+        run: |
+          shopt -s globstar nullglob
+          fail=0
+          for f in **/*.json; do
+            node -e "JSON.parse(require('fs').readFileSync('$f','utf8'))" \
+              && echo "ok   $f" || { echo "bad  $f"; fail=1; }
+          done
+          exit $fail
