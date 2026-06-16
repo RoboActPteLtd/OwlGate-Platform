@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Repository layout for the UiPath Solution, Test Cloud test specs, API Workflows,
   and Orchestrator orchestration.
 - Architecture, demo-script, and runbook docs.
+- Declarative orchestration manifest (`orchestration/owlgate.orchestration.json`),
+  a `scripts/provision.sh` using the `uip` CLI, and an integration guide
+  (`docs/integration.md`) wiring the queue → trigger → process → agents → gate →
+  dashboard flow.
 - Minimal GitHub Actions CI — required-files check and JSON well-formedness validation; gitleaks secret scan.
 
 ### Changed

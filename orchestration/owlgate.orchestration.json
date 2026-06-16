@@ -1,0 +1,38 @@
+{
+  "$comment": "OwlGate's own declarative wiring of the UiPath resources the gate uses. Applied via scripts/provision.sh; not a UiPath-internal schema.",
+  "folder": "Shared",
+  "queue": {
+    "name": "owlgate-changes",
+    "description": "One work item per change (PR/diff) entering the gate.",
+    "maxNumberOfRetries": 1,
+    "acceptAutomaticallyRetry": true,
+    "enforceUniqueReference": true
+  },
+  "trigger": {
+    "type": "queue",
+    "queue": "owlgate-changes",
+    "process": "owlgate-gate"
+  },
+  "process": {
+    "name": "owlgate-gate",
+    "package": "owlgate-agents",
+    "description": "select -> execute -> heal -> decide -> escalate -> publish",
+    "stages": ["select", "execute", "heal", "decide", "escalate", "publish"]
+  },
+  "agents": {
+    "package": "owlgate-agents",
+    "runtime": "coded-agent",
+    "consumes": "ai-units"
+  },
+  "humanGate": {
+    "type": "action-center",
+    "taskTitle": "OwlGate release approval",
+    "createWhen": "verdict.needs_human == true",
+    "actions": ["approve", "override", "reject"]
+  },
+  "apiWorkflows": ["fetch-diff", "notify", "publish-verdict"],
+  "publish": {
+    "target": "owlgate-dashboard",
+    "artifact": "report.json"
+  }
+}
